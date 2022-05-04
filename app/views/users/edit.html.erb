@@ -1,0 +1,23 @@
+<h1>
+  Editing user
+</h1>
+
+<%= form_with model: @user, method: :patch do |form| %>
+
+  <%= form.object.errors.full_messages.to_sentence %>
+
+  <%= field_set_tag "User details" do %>
+    <%= form.label :email %>
+    <%= form.text_field :email, disabled: true %>
+    <br>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+    <br>
+    <%= form.label :role %>
+    <%= form.select :role, User.roles, {include_blank: true}, {disabled: !current_user.admin?} %>
+    <br>
+    <%= form.submit %>
+  <% end %>
+<% end %>
+
+<%= link_to "Cancel", users_path %>
