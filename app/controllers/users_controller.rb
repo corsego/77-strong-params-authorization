@@ -29,6 +29,14 @@ class UsersController < ApplicationController
   end
 
   def update_params
-    params.require(:user).permit(:name, :role)
+    # params.require(:user).permit(:name, :role)
+
+    # return params.require(:user).permit(:name) if @user == current_user
+    # return params.require(:user).permit(:name, :role) if current_user.admin?
+
+    allowed_params = []
+    allowed_params += [:name] if @user == current_user
+    allowed_params += [:role] if current_user.admin?
+    params.require(:user).permit(allowed_params)
   end
 end
